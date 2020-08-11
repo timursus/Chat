@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-const ChannelsList = (props) => {
-  const { channels, currentChannelId } = props;
+const ChannelsList = ({ currentChannelId }) => {
+  const { channels } = useSelector(
+    (state) => state.channelsInfo,
+  );
   return (
     <nav className="nav nav-pills nav-fill flex-column">
       {channels.map(({ id, name }) => {
