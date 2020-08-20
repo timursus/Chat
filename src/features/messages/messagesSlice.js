@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "props": false }] */
+
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../../routes.js';
@@ -10,10 +12,14 @@ const messagesSlice = createSlice({
       const { message } = action.payload;
       state.messages.push(message);
     },
+    removeChannelMessages(state, action) {
+      const { removingChannelId } = action.payload;
+      state.messages = state.messages.filter((m) => m.channelId !== removingChannelId);
+    },
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, removeChannelMessages } = messagesSlice.actions;
 export default messagesSlice.reducer;
 
 export const sendMessage = (attributes, channelId) => async () => {
@@ -22,7 +28,6 @@ export const sendMessage = (attributes, channelId) => async () => {
     method: 'post',
     url,
     data: { data: { attributes } },
-    params: { channelId },
     timeout: 5000,
   });
   return response;

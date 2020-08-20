@@ -8,11 +8,11 @@ import UsernameContext from './context.js';
 import handleSocket from './socket.js';
 
 export default (channels, currentChannelId, messages, username, socket) => {
-  const initialState = {
+  const preloadedState = {
     channelsInfo: { channels, currentChannelId },
     messagesInfo: { messages },
   };
-  const store = configureStore({ reducer: rootReducer, preloadedState: initialState });
+  const store = configureStore({ reducer: rootReducer, preloadedState });
 
   render(
     <Provider store={store}>

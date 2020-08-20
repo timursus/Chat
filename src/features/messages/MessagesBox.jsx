@@ -6,11 +6,16 @@ const MessagesBox = ({ currentChannelId }) => {
     (state) => state.messagesInfo,
   );
   return (
-    <section className="border overflow-auto h-50">
+    <div className="border border-primary rounded overflow-auto text-break h-100 mb-2 p-2">
       {messages
         .filter(({ channelId }) => channelId === currentChannelId)
-        .map(({ message, id, username }) => <div key={id}>{`${username}: ${message}`}</div>)}
-    </section>
+        .map(({ message, id, username }) => (
+          <div key={id}>
+            <strong className="text-monospace">{`${username}: `}</strong>
+            <span>{message}</span>
+          </div>
+        ))}
+    </div>
   );
 };
 
