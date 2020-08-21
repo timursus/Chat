@@ -10,7 +10,7 @@ import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import ErrorAlert from '../../../components/ErrorAlert.jsx';
-import { createNewChannel } from '../channelsSlice.js';
+import { createNewChannel, setCurrentChannel } from '../channelsSlice.js';
 
 const Add = ({ onHide }) => {
   const inputEl = useRef(null);
@@ -20,7 +20,8 @@ const Add = ({ onHide }) => {
 
   const handleSubmit = async ({ channelName }, { setFieldError }) => {
     try {
-      await dispatch(createNewChannel(channelName));
+      const response = await dispatch(createNewChannel(channelName));
+      dispatch(setCurrentChannel({ id: response.data.data.id }));
       onHide();
     } catch (error) {
       setFieldError('channelName', error.message);

@@ -23,7 +23,7 @@ const ChannelDetails = ({ currentChannel }) => {
 
   return (
     <div className="d-flex justify-content-between p-2">
-      <h5 className="text-truncate text-info">{currentChannel.name}</h5>
+      <h5 className="text-truncate text-info mb-1 pb-1">{currentChannel.name}</h5>
       {getEditButtons()}
       {formShow === 'remove' && <Remove channel={currentChannel} onHide={closeForm} />}
       {formShow === 'rename' && <Rename channel={currentChannel} onHide={closeForm} />}

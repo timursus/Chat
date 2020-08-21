@@ -1,6 +1,6 @@
 {
   "name": "frontend_l4_chat_project",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "my chat application",
   "main": "dist/index.js",
   "bin": {
