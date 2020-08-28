@@ -1,7 +1,10 @@
+import io from 'socket.io-client';
 import { addMessage, removeChannelMessages } from '../features/messages/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from '../features/channels/channelsSlice.js';
 
-export default (socket, dispatch) => {
+export default (dispatch) => {
+  const socket = io();
+
   socket.on('newMessage', ({ data }) => dispatch(addMessage({ message: data.attributes })));
 
   socket.on('newChannel', ({ data }) => dispatch(addChannel({ channel: data.attributes })));
