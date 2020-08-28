@@ -11,6 +11,7 @@ const channelsSlice = createSlice({
     addChannel(state, action) {
       const { channel } = action.payload;
       state.channels.push(channel);
+      state.currentChannelId = channel.id;
     },
     removeChannel(state, action) {
       const { removingChannelId } = action.payload;

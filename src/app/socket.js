@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { addMessage, removeChannelMessages } from '../features/messages/messagesSlice.js';
+import { addMessage } from '../features/messages/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from '../features/channels/channelsSlice.js';
 
 export default (dispatch) => {
@@ -9,11 +9,7 @@ export default (dispatch) => {
 
   socket.on('newChannel', ({ data }) => dispatch(addChannel({ channel: data.attributes })));
 
-  socket.on('removeChannel', ({ data }) => {
-    const removingChannelId = data.id;
-    dispatch(removeChannel({ removingChannelId }));
-    dispatch(removeChannelMessages({ removingChannelId }));
-  });
+  socket.on('removeChannel', ({ data }) => dispatch(removeChannel({ removingChannelId: data.id })));
 
   socket.on('renameChannel', ({ data }) => dispatch(renameChannel({ channelId: data.id, editedChannel: data.attributes })));
 };

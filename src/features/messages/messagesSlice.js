@@ -3,6 +3,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../../routes.js';
+import { removeChannel } from '../channels/channelsSlice.js';
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -12,14 +13,16 @@ const messagesSlice = createSlice({
       const { message } = action.payload;
       state.messages.push(message);
     },
-    removeChannelMessages(state, action) {
+  },
+  extraReducers: {
+    [removeChannel](state, action) {
       const { removingChannelId } = action.payload;
       state.messages = state.messages.filter((m) => m.channelId !== removingChannelId);
     },
   },
 });
 
-export const { addMessage, removeChannelMessages } = messagesSlice.actions;
+export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;
 
 export const sendMessage = (attributes, channelId) => async () => {
