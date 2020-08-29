@@ -9,22 +9,27 @@ import UsernameContext from './context.js';
 import initSocket from './socket.js';
 import App from '../components/App.jsx';
 
-export default (channels, currentChannelId, messages) => {
-  const preloadedState = {
-    channelsInfo: { channels, currentChannelId },
-    messagesInfo: { messages },
-  };
-  const store = configureStore({ reducer: rootReducer, preloadedState });
-
-  initSocket(store.dispatch);
-
+const getUserName = () => {
   if (!cookies.get('username')) {
     cookies.set('username', faker.fake('{{internet.userName}}'));
   }
+  return cookies.get('username');
+};
+
+export default (channels, currentChannelId, messages) => {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState: {
+      channelsInfo: { channels, currentChannelId },
+      messagesInfo: { messages },
+    },
+  });
+
+  initSocket(store.dispatch);
 
   render(
     <Provider store={store}>
-      <UsernameContext.Provider value={cookies.get('username')}>
+      <UsernameContext.Provider value={getUserName()}>
         <App />
       </UsernameContext.Provider>
     </Provider>,
