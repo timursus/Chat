@@ -1,5 +1,3 @@
-const CopyPlugin = require('copy-webpack-plugin');
-
 const isProduction = process.env.NODE_ENV === 'production';
 console.log('isProduction', isProduction);
 
@@ -18,16 +16,6 @@ module.exports = {
     path: `${__dirname}/dist/public`,
     publicPath: '/assets/',
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: `${__dirname}/src/rollbar.js`,
-          to: `${__dirname}/dist/public`,
-        },
-      ],
-    }),
-  ],
   module: {
     rules: [
       {

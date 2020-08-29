@@ -3,12 +3,17 @@ import 'regenerator-runtime/runtime';
 
 import '../assets/application.scss';
 
+import Rollbar from 'rollbar';
 import gon from 'gon';
 import runApp from './app';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
+const configureRollbar = () => new Rollbar({
+  accessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+});
+
+configureRollbar();
 
 const { channels, currentChannelId, messages } = gon;
 
