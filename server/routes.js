@@ -14,6 +14,9 @@ const buildState = (defaultState) => {
     ],
     messages: [],
     currentChannelId: generalChannelId,
+    config: {
+      rollbarAccessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
+    },
   };
 
   if (defaultState.messages) {

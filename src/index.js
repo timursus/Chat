@@ -3,18 +3,17 @@ import 'regenerator-runtime/runtime';
 
 import '../assets/application.scss';
 
-import Rollbar from 'rollbar';
 import gon from 'gon';
+import configureRollbar from './rollbar.js';
 import runApp from './app';
 
-const configureRollbar = () => new Rollbar({
-  accessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
+const {
+  channels,
+  currentChannelId,
+  messages,
+  config,
+} = gon;
 
-configureRollbar();
-
-const { channels, currentChannelId, messages } = gon;
+configureRollbar(config.rollbarAccessToken);
 
 runApp(channels, currentChannelId, messages);
