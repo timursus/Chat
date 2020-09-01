@@ -1,6 +1,6 @@
 {
   "name": "frontend_l4_chat_project",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "my chat application",
   "main": "dist/index.js",
   "bin": {
@@ -79,6 +79,7 @@
     "@types/jest": "^26.0.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
+    "copy-webpack-plugin": "^6.0.4",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-import-resolver-webpack": "^0.12.2",

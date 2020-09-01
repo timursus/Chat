@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Remove from './modals/Remove.jsx';
-import Rename from './modals/Rename.jsx';
 
-const ChannelDetails = ({ currentChannel }) => {
-  const [showingForm, setShowingForm] = useState(null);
-  const showRemovingForm = () => setShowingForm('removing');
-  const showRenamingForm = () => setShowingForm('renaming');
-  const hideForm = () => setShowingForm(null);
+const ChannelDetails = ({ currentChannel, showModal }) => {
+  const showRenamingForm = () => showModal('renaming', currentChannel);
+  const showRemovingForm = () => showModal('removing', currentChannel);
 
   const getEditButtons = () => {
     if (!currentChannel.removable) {
@@ -25,8 +21,6 @@ const ChannelDetails = ({ currentChannel }) => {
     <div className="d-flex justify-content-between p-2">
       <h5 className="text-truncate text-info mb-1 pb-1">{currentChannel.name}</h5>
       {getEditButtons()}
-      {showingForm === 'removing' && <Remove channel={currentChannel} onHide={hideForm} />}
-      {showingForm === 'renaming' && <Rename channel={currentChannel} onHide={hideForm} />}
     </div>
   );
 };

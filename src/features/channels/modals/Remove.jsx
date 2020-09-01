@@ -10,12 +10,13 @@ import Button from 'react-bootstrap/Button';
 import ErrorAlert from '../../../components/ErrorAlert.jsx';
 import { deleteChannel } from '../channelsSlice.js';
 
-const Remove = ({ channel, onHide }) => {
+const Remove = ({ modalInfo, onHide }) => {
+  const { currentChannel } = modalInfo;
   const dispatch = useDispatch();
 
   const handleSubmit = async (_values, { setFieldError }) => {
     try {
-      await dispatch(deleteChannel(channel.id));
+      await dispatch(deleteChannel(currentChannel.id));
       onHide();
     } catch (error) {
       setFieldError('submit', error.message);
@@ -28,12 +29,12 @@ const Remove = ({ channel, onHide }) => {
       <Modal.Header>
         <Modal.Title className="text-truncate">
           Delete channel &quot;
-          {channel.name}
+          {currentChannel.name}
           &quot;?
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik initialValues={{ submit: '' }} onSubmit={handleSubmit}>
+        <Formik initialValues={{ id: currentChannel.id }} onSubmit={handleSubmit}>
           {(props) => (
             <Form>
               <ErrorMessage component={ErrorAlert} name="submit" />

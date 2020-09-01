@@ -12,15 +12,16 @@ import Button from 'react-bootstrap/Button';
 import ErrorAlert from '../../../components/ErrorAlert.jsx';
 import { setChannelName } from '../channelsSlice.js';
 
-const Rename = ({ channel, onHide }) => {
+const Rename = ({ modalInfo, onHide }) => {
+  const { currentChannel } = modalInfo;
+  const dispatch = useDispatch();
+
   const inputEl = useRef(null);
   useEffect(() => inputEl.current.select(), []);
 
-  const dispatch = useDispatch();
-
   const handleSubmit = async ({ channelName }, { setFieldError }) => {
     try {
-      await dispatch(setChannelName(channel.id, channelName));
+      await dispatch(setChannelName(currentChannel.id, channelName));
       onHide();
     } catch (error) {
       setFieldError('channelName', error.message);
@@ -35,7 +36,7 @@ const Rename = ({ channel, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <Formik
-          initialValues={{ channelName: channel.name }}
+          initialValues={{ channelName: currentChannel.name }}
           onSubmit={handleSubmit}
         >
           {(props) => (
