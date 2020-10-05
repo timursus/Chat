@@ -9,11 +9,13 @@ import UsernameContext from './context.js';
 import initSocket from './socket.js';
 import App from '../components/App.jsx';
 
-const getUserName = () => {
-  if (!cookies.get('username')) {
-    cookies.set('username', faker.fake('{{internet.userName}}'));
+const setUserNameIfEmpty = () => {
+  let username = cookies.get('username');
+  if (!username) {
+    username = faker.fake('{{internet.userName}}');
+    cookies.set('username', username);
   }
-  return cookies.get('username');
+  return username;
 };
 
 export default (channels, currentChannelId, messages) => {
@@ -29,7 +31,7 @@ export default (channels, currentChannelId, messages) => {
 
   render(
     <Provider store={store}>
-      <UsernameContext.Provider value={getUserName()}>
+      <UsernameContext.Provider value={setUserNameIfEmpty()}>
         <App />
       </UsernameContext.Provider>
     </Provider>,
