@@ -40,7 +40,7 @@ const Rename = ({ modalInfo, onHide }) => {
           onSubmit={handleSubmit}
         >
           {(props) => (
-            <Form>
+            <Form autoComplete="off">
               <ErrorMessage component={ErrorAlert} name="channelName" />
               <FormGroup>
                 <FormControl

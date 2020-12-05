@@ -1,18 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+const renderMessage = ({ id, message, username }) => (
+  <div key={id} className="card mb-2">
+    <div className="card-body py-2">
+      <div><strong>{`${username}: `}</strong></div>
+      <p className="card-text">{message}</p>
+    </div>
+  </div>
+);
+
 const MessagesBox = ({ currentChannelId }) => {
-  const currentMessages = useSelector(
+  const currentChannelMessages = useSelector(
     (state) => state.messagesInfo.messages.filter((m) => m.channelId === currentChannelId),
   );
   return (
-    <div className="border border-primary rounded overflow-auto text-break h-100 mb-2 p-2">
-      {currentMessages.map(({ message, id, username }) => (
-        <div key={id}>
-          <strong className="text-monospace">{`${username}: `}</strong>
-          <span>{message}</span>
-        </div>
-      ))}
+    <div className="container-xl h-100 overflow-auto px-0 py-1">
+      {currentChannelMessages.map(renderMessage)}
     </div>
   );
 };

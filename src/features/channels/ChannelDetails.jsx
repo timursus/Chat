@@ -5,22 +5,24 @@ const ChannelDetails = ({ currentChannel, showModal }) => {
   const showRenamingForm = () => showModal('renaming', currentChannel);
   const showRemovingForm = () => showModal('removing', currentChannel);
 
-  const getEditButtons = () => {
+  const renderEditButtons = () => {
     if (!currentChannel.removable) {
       return null;
     }
     return (
-      <div className="flex-shrink-0">
-        <Button variant="outline-secondary" size="sm" onClick={showRenamingForm}>Rename</Button>
-        <Button variant="outline-danger" size="sm" className="ml-1" onClick={showRemovingForm}>Delete</Button>
+      <div className="col-auto">
+        <Button variant="outline-dark" onClick={showRenamingForm}>Rename</Button>
+        <Button variant="outline-danger" className="ml-2" onClick={showRemovingForm}>Delete</Button>
       </div>
     );
   };
 
   return (
-    <div className="d-flex justify-content-between p-2">
-      <h5 className="text-truncate text-info mb-1 pb-1">{currentChannel.name}</h5>
-      {getEditButtons()}
+    <div className="row align-items-baseline border-bottom border-primary py-2">
+      <div className="col">
+        <h5 className="text-primary text-truncate m-0 pb-1">{currentChannel.name}</h5>
+      </div>
+      {renderEditButtons()}
     </div>
   );
 };
