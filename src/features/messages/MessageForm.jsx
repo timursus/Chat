@@ -21,7 +21,7 @@ const MessageForm = ({ currentChannelId }) => {
 
   const handleSubmit = async ({ message }, { resetForm, setFieldError }) => {
     try {
-      await dispatch(sendMessage({ message, username }, currentChannelId));
+      await dispatch(sendMessage({ body: message, username }, currentChannelId));
       resetForm();
     } catch (error) {
       setFieldError('message', error.message);
@@ -35,9 +35,9 @@ const MessageForm = ({ currentChannelId }) => {
       onSubmit={handleSubmit}
     >
       {(props) => (
-        <Form className="m-2 m-md-3" autoComplete="off">
+        <Form className="m-2 m-md-3 mx-xl-4" autoComplete="off">
           <ErrorMessage component={ErrorAlert} name="message" />
-          <InputGroup className="w-100">
+          <InputGroup>
             <FormControl
               name="message"
               type="text"

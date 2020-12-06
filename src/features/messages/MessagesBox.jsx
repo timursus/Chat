@@ -5,7 +5,7 @@ const timeFormatter = new Intl.DateTimeFormat([], { timeStyle: 'short' });
 
 const renderMessage = ({
   id,
-  message,
+  body,
   username,
   date,
 }) => {
@@ -17,7 +17,7 @@ const renderMessage = ({
           {`${username}`}
           <span className="badge badge-light text-muted font-weight-normal ml-2">{sendTime}</span>
         </h6>
-        <p className="card-text">{message}</p>
+        <p className="card-text">{body}</p>
       </div>
     </div>
   );
