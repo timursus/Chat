@@ -10,18 +10,16 @@ const ChannelDetails = ({ currentChannel, showModal }) => {
       return null;
     }
     return (
-      <div className="col-auto">
+      <div className="btn-group">
         <Button variant="outline-dark" onClick={showRenamingForm}>Rename</Button>
-        <Button variant="outline-danger" className="ml-2" onClick={showRemovingForm}>Delete</Button>
+        <Button variant="outline-danger" onClick={showRemovingForm}>Delete</Button>
       </div>
     );
   };
 
   return (
-    <div className="row align-items-baseline border-bottom border-primary py-2">
-      <div className="col">
-        <h5 className="text-primary text-truncate m-0 pb-1">{currentChannel.name}</h5>
-      </div>
+    <div className="d-flex justify-content-between align-items-baseline border-bottom border-primary p-2 px-md-4">
+      <h5 className="text-primary text-truncate my-1 p-1">{currentChannel.name}</h5>
       {renderEditButtons()}
     </div>
   );

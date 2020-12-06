@@ -35,7 +35,7 @@ const MessageForm = ({ currentChannelId }) => {
       onSubmit={handleSubmit}
     >
       {(props) => (
-        <Form className="my-3" autoComplete="off">
+        <Form className="m-2 m-md-3" autoComplete="off">
           <ErrorMessage component={ErrorAlert} name="message" />
           <InputGroup className="w-100">
             <FormControl

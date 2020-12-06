@@ -26,12 +26,10 @@ const App = () => {
   const hideModal = () => setModalInfo({ type: null, currentChannel: null });
 
   return (
-    <main className="row h-100">
-      <section className="col-3 col-xl-2 bg-dark h-100">
+    <main className="row no-gutters h-100">
+      <section className="col-3 col-xl-2 d-flex flex-column h-100 bg-dark">
         <ChannelsHeader showModal={showModal} />
-        <div className="overflow-auto">
-          <ChannelsMenu channels={channels} currentChannelId={currentChannelId} />
-        </div>
+        <ChannelsMenu channels={channels} currentChannelId={currentChannelId} />
       </section>
       <section className="col d-flex flex-column h-100">
         <ChannelDetails currentChannel={currentChannel} showModal={showModal} />

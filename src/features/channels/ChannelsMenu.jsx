@@ -12,15 +12,17 @@ const ChannelsMenu = ({ channels, currentChannelId }) => {
   };
 
   return (
-    <nav className="nav flex-column">
-      {channels.map(({ id, name }) => {
-        const isActive = currentChannelId === id;
-        const classes = cn('nav-link w-100 text-truncate btn', { 'btn-primary': isActive, 'btn-dark': !isActive });
-        return (
-          <a className={classes} key={id} href={`#${id}`} onClick={openChannel(id)}>{name}</a>
-        );
-      })}
-    </nav>
+    <div className="overflow-auto h-100 pb-3 px-md-2">
+      <nav className="nav flex-column">
+        {channels.map(({ id, name }) => {
+          const isActive = currentChannelId === id;
+          const classes = cn('nav-link w-100 text-truncate btn', { 'btn-primary': isActive, 'btn-dark': !isActive });
+          return (
+            <a className={classes} key={id} href={`#${id}`} onClick={openChannel(id)}>{name}</a>
+          );
+        })}
+      </nav>
+    </div>
   );
 };
 

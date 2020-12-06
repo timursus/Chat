@@ -7,10 +7,12 @@ const getNextId = () => Number(_.uniqueId());
 const buildState = (defaultState) => {
   const generalChannelId = getNextId();
   const randomChannelId = getNextId();
+  const removableChannelId = getNextId();
   const state = {
     channels: [
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
+      { id: removableChannelId, name: 'removable', removable: true },
     ],
     messages: [],
     currentChannelId: generalChannelId,
@@ -120,6 +122,7 @@ export default (app, io, defaultState = {}) => {
         ...attributes,
         channelId: Number(req.params.channelId),
         id: getNextId(),
+        date: Date.now(),
       };
       state.messages.push(message);
       reply.code(201);
