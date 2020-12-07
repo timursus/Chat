@@ -1,16 +1,23 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Formik,
-  Form,
-  ErrorMessage,
-} from 'formik';
+import { Formik, Form } from 'formik';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import ErrorAlert from '../../components/ErrorAlert.jsx';
+import Alert from 'react-bootstrap/Alert';
 import { sendMessage } from './messagesSlice.js';
 import UsernameContext from '../../app/context.js';
+
+const generateOnSubmit = (username, currentChannelId, dispatch) => (
+  async ({ message }, { resetForm, setStatus }) => {
+    try {
+      await dispatch(sendMessage({ body: message, username }, currentChannelId));
+      resetForm();
+    } catch (error) {
+      setStatus(error.message);
+      throw error;
+    }
+  });
 
 const MessageForm = ({ currentChannelId }) => {
   const inputEl = useRef(null);
@@ -19,24 +26,14 @@ const MessageForm = ({ currentChannelId }) => {
   const dispatch = useDispatch();
   const username = useContext(UsernameContext);
 
-  const handleSubmit = async ({ message }, { resetForm, setFieldError }) => {
-    try {
-      await dispatch(sendMessage({ body: message, username }, currentChannelId));
-      resetForm();
-    } catch (error) {
-      setFieldError('message', error.message);
-      throw error;
-    }
-  };
-
   return (
     <Formik
       initialValues={{ message: '' }}
-      onSubmit={handleSubmit}
+      onSubmit={generateOnSubmit(username, currentChannelId, dispatch)}
     >
       {(props) => (
         <Form className="m-2 m-md-3 mx-xl-4" autoComplete="off">
-          <ErrorMessage component={ErrorAlert} name="message" />
+          {props.status && <Alert variant="danger">{props.status}</Alert>}
           <InputGroup>
             <FormControl
               name="message"
