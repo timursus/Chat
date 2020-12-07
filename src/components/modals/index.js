@@ -1,11 +1,10 @@
-import Add from './Add.jsx';
+import ChannelNameDialog from './ChannelNameDialog.jsx';
 import Remove from './Remove.jsx';
-import Rename from './Rename.jsx';
 
 const modals = {
-  adding: Add,
+  adding: ChannelNameDialog,
+  renaming: ChannelNameDialog,
   removing: Remove,
-  renaming: Rename,
 };
 
 export default (modalName) => modals[modalName];

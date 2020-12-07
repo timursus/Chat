@@ -1,28 +1,25 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Formik,
-  Form,
-  ErrorMessage,
-} from 'formik';
+import { Formik, Form } from 'formik';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import ErrorAlert from '../../../components/ErrorAlert.jsx';
-import { deleteChannel } from '../channelsSlice.js';
+import Alert from 'react-bootstrap/Alert';
+import { deleteChannel } from '../../features/channels/channelsSlice.js';
+
+const generateOnSubmit = (dispatch, onHide) => (
+  async ({ id }, { setStatus }) => {
+    try {
+      await dispatch(deleteChannel(id));
+      onHide();
+    } catch (error) {
+      setStatus(error.message);
+      throw error;
+    }
+  });
 
 const Remove = ({ modalInfo, onHide }) => {
   const { currentChannel } = modalInfo;
   const dispatch = useDispatch();
-
-  const handleSubmit = async (_values, { setFieldError }) => {
-    try {
-      await dispatch(deleteChannel(currentChannel.id));
-      onHide();
-    } catch (error) {
-      setFieldError('submit', error.message);
-      throw error;
-    }
-  };
 
   return (
     <Modal show onHide={onHide}>
@@ -34,15 +31,18 @@ const Remove = ({ modalInfo, onHide }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik initialValues={{ id: currentChannel.id }} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={{ id: currentChannel.id }}
+          onSubmit={generateOnSubmit(dispatch, onHide)}
+        >
           {(props) => (
             <Form>
-              <ErrorMessage component={ErrorAlert} name="submit" />
-              <div className="row justify-content-around">
+              {props.status && <Alert variant="danger">{props.status}</Alert>}
+              <div className="d-flex justify-content-around">
                 <Button
                   type="submit"
                   variant="danger"
-                  className="col-4"
+                  className="w-25"
                   disabled={props.isSubmitting}
                 >
                   Delete
@@ -50,7 +50,7 @@ const Remove = ({ modalInfo, onHide }) => {
                 <Button
                   type="button"
                   variant="outline-secondary"
-                  className="col-4"
+                  className="w-25"
                   onClick={onHide}
                   disabled={props.isSubmitting}
                 >

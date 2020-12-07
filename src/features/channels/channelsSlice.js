@@ -57,7 +57,7 @@ export const deleteChannel = (id) => async () => {
   return response;
 };
 
-export const setChannelName = (id, name) => async () => {
+export const setChannelName = (name, id) => async () => {
   const response = await axios({
     method: 'patch',
     url: routes.channelPath(id),

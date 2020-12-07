@@ -5,7 +5,7 @@ import ChannelsMenu from '../features/channels/ChannelsMenu.jsx';
 import ChannelDetails from '../features/channels/ChannelDetails.jsx';
 import MessagesBox from '../features/messages/MessagesBox.jsx';
 import MessageForm from '../features/messages/MessageForm.jsx';
-import getModal from '../features/channels/modals';
+import getModal from './modals';
 
 const renderModal = (modalInfo, hideModal) => {
   if (!modalInfo.type) {
