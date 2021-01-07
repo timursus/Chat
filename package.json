@@ -1,11 +1,8 @@
 {
-  "name": "frontend_l4_chat_project",
-  "version": "0.4.0",
-  "description": "my chat application",
-  "main": "dist/index.js",
-  "bin": {
-    "slack": "dist/bin/slack.js"
-  },
+  "name": "@timursus/chat",
+  "version": "0.4.1",
+  "description": "chat web application",
+  "browser": "dist/public/main.js",
   "engines": {
     "node": ">= 13"
   },
