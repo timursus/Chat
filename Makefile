@@ -7,13 +7,12 @@ start-backend:
 	npx nodemon --exec npx babel-node server/bin/slack.js
 
 start-frontend:
-	npx webpack-dev-server
+	npx webpack serve
 
 install-deps:
-	npm install
+	npm ci
 
 build:
-	rm -rf dist
 	npm run build
 
 test:
@@ -24,9 +23,6 @@ test-coverage:
 
 lint:
 	npx eslint . --ext js,jsx
-
-publish:
-	npm publish
 
 deploy:
 	git push heroku

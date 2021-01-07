@@ -1,11 +1,15 @@
+import path from 'path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 const isProduction = process.env.NODE_ENV === 'production';
-console.log('isProduction', isProduction);
+
+const plugins = [];
+if (isProduction) {
+  plugins.push(new MiniCssExtractPlugin());
+}
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: [
-    `${__dirname}/src/index.js`,
-  ],
   externals: {
     gon: 'gon',
   },
@@ -13,9 +17,10 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
-    path: `${__dirname}/dist/public`,
+    path: path.join(__dirname, 'dist', 'public'),
     publicPath: '/assets/',
   },
+  plugins,
   module: {
     rules: [
       {
@@ -26,7 +31,7 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          { loader: 'style-loader' },
+          { loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader' },
           { loader: 'css-loader' },
           { loader: 'postcss-loader' },
           { loader: 'sass-loader' },
