@@ -1,44 +1,26 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import ChannelsHeader from '../features/channels/ChannelsHeader.jsx';
-import ChannelsMenu from '../features/channels/ChannelsMenu.jsx';
-import ChannelDetails from '../features/channels/ChannelDetails.jsx';
-import MessagesBox from '../features/messages/MessagesBox.jsx';
-import MessageForm from '../features/messages/MessageForm.jsx';
-import getModal from './modals';
-
-const renderModal = (modalInfo, hideModal) => {
-  if (!modalInfo.type) {
-    return null;
-  }
-  const Modal = getModal(modalInfo.type);
-  return <Modal modalInfo={modalInfo} onHide={hideModal} />;
-};
+import cookies from 'js-cookie';
+import Chat from './Chat.jsx';
+import UsernameForm from './UsernameForm.jsx';
+import UsernameContext from '../app/context.js';
 
 const App = () => {
-  const { channels, currentChannelId } = useSelector(
-    (state) => state.channelsInfo,
-  );
-  const currentChannel = channels.find((c) => c.id === currentChannelId);
+  const [username, setUserName] = useState(cookies.get('username'));
 
-  const [modalInfo, setModalInfo] = useState({ type: null, currentChannel: null });
-  const showModal = (type, channel = null) => setModalInfo({ type, currentChannel: channel });
-  const hideModal = () => setModalInfo({ type: null, currentChannel: null });
+  const saveUserName = (name, remember) => {
+    const cookieAttributes = remember ? { expires: 42 } : {};
+    cookies.set('username', name, cookieAttributes);
+    setUserName(name);
+  };
 
-  return (
-    <main className="row no-gutters h-100">
-      <section className="col-3 col-xl-2 d-flex flex-column h-100 bg-dark">
-        <ChannelsHeader showModal={showModal} />
-        <ChannelsMenu channels={channels} currentChannelId={currentChannelId} />
-      </section>
-      <section className="col d-flex flex-column h-100">
-        <ChannelDetails currentChannel={currentChannel} showModal={showModal} />
-        <MessagesBox currentChannelId={currentChannelId} />
-        <MessageForm currentChannelId={currentChannelId} />
-      </section>
-      {renderModal(modalInfo, hideModal)}
-    </main>
-  );
+  if (username) {
+    return (
+      <UsernameContext.Provider value={username}>
+        <Chat />
+      </UsernameContext.Provider>
+    );
+  }
+  return <UsernameForm saveUserName={saveUserName} />;
 };
 
 export default App;
